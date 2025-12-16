@@ -1,16 +1,16 @@
-html, body {
-  margin: 0;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base safety styles */
+html,
+body {
   padding: 0;
-  height: 100%;
-  background: url("/backgrounds/dashboard-bg-1.jpeg") center/cover no-repeat fixed;
-  color: #eaeaea;
-  font-family: Inter, system-ui, sans-serif;
+  margin: 0;
+  background: #000;
+  color: #fff;
 }
 
-* { box-sizing: border-box; }
-
-.panel {
-  backdrop-filter: blur(20px);
-  background: rgba(10,10,10,0.55);
-  border: 1px solid rgba(255,255,255,0.08);
+* {
+  box-sizing: border-box;
 }

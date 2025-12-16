@@ -1,0 +1,9 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[452],{8016:function(e,t,r){Promise.resolve().then(r.bind(r,9807)),Promise.resolve().then(r.t.bind(r,8326,23))},9807:function(e,t,r){"use strict";r.r(t),r.d(t,{default:function(){return ChatPanel}});var n=r(7437);function ChatPanel(){return(0,n.jsxs)("div",{className:"space-y-3 border-b border-neutral-800 pb-4",children:[(0,n.jsx)("h3",{className:"text-sm font-semibold text-white",children:"AI Chat"}),(0,n.jsx)("div",{className:"rounded bg-neutral-900 p-3 text-sm text-neutral-400",children:"Chat engine online."}),(0,n.jsx)("textarea",{className:"w-full rounded bg-neutral-900 p-2 text-sm text-white placeholder:text-neutral-500",placeholder:"Ask Ideatorium to build, modify, or explain…",rows:3}),(0,n.jsx)("button",{className:"rounded bg-white px-3 py-1 text-sm text-black",children:"Send"})]})}},622:function(e,t,r){"use strict";/**
+ * @license React
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */var n=r(2265),o=Symbol.for("react.element"),s=(Symbol.for("react.fragment"),Object.prototype.hasOwnProperty),a=n.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,l={key:!0,ref:!0,__self:!0,__source:!0};function q(e,t,r){var n,i={},u=null,c=null;for(n in void 0!==r&&(u=""+r),void 0!==t.key&&(u=""+t.key),void 0!==t.ref&&(c=t.ref),t)s.call(t,n)&&!l.hasOwnProperty(n)&&(i[n]=t[n]);if(e&&e.defaultProps)for(n in t=e.defaultProps)void 0===i[n]&&(i[n]=t[n]);return{$$typeof:o,type:e,key:u,ref:c,props:i,_owner:a.current}}t.jsx=q,t.jsxs=q},7437:function(e,t,r){"use strict";e.exports=r(622)}},function(e){e.O(0,[326,971,472,744],function(){return e(e.s=8016)}),_N_E=e.O()}]);
