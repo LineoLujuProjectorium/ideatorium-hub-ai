@@ -1,6 +1,20 @@
 {
-  "buildCommand": "npm run build",
+  "version": 2,
   "framework": "nextjs",
-  "installCommand": "npm install",
-  "outputDirectory": ".next"
+
+  "buildCommand": "npm run build",
+  "installCommand": "npm install --no-audit --no-fund",
+
+  "functions": {
+    "app/**/*.ts": {
+      "memory": 1024
+    },
+    "app/**/*.tsx": {
+      "memory": 1024
+    }
+  },
+
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": "1"
+  }
 }
