@@ -1,20 +1,20 @@
+/*
 {
-  "version": 2,
+  "buildCommand": "npm run build && prisma generate",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
   "framework": "nextjs",
-
-  "buildCommand": "npm run build",
-  "installCommand": "npm install --no-audit --no-fund",
-
-  "functions": {
-    "app/**/*.ts": {
-      "memory": 1024
-    },
-    "app/**/*.tsx": {
-      "memory": 1024
-    }
-  },
-
+  "regions": ["iad1"],
   "env": {
-    "NEXT_TELEMETRY_DISABLED": "1"
+    "DATABASE_URL": "@database-url",
+    "ANTHROPIC_API_KEY": "@anthropic-api-key",
+    "VERCEL_TOKEN": "@vercel-token",
+    "SUPABASE_SERVICE_ROLE_KEY": "@supabase-service-role-key"
+  },
+  "build": {
+    "env": {
+      "DATABASE_URL": "@database-url"
+    }
   }
 }
+*/

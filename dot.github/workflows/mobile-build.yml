@@ -1,0 +1,134 @@
+/*
+name: Mobile Build Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      projectId:
+        description: 'Project ID to build'
+        required: true
+      platform:
+        description: 'Platform to build'
+        required: true
+        type: choice
+        options:
+          - ios
+          - android
+          - both
+
+jobs:
+  build-ios:
+    if: ${{ github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'both' }}
+    runs-on: macos-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          cd workspaces/${{ github.event.inputs.projectId }}
+          npm install
+      
+      - name: Build web assets
+        run: |
+          cd workspaces/${{ github.event.inputs.projectId }}
+          npm run build
+      
+      - name: Sync Capacitor
+        run: |
+          cd workspaces/${{ github.event.inputs.projectId }}
+          npx cap sync ios
+      
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      
+      - name: Build iOS app
+        run: |
+          cd workspaces/${{ github.event.inputs.projectId }}/ios/App
+          xcodebuild -workspace App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -archivePath $PWD/build/App.xcarchive \
+            archive
+      
+      - name: Export IPA
+        run: |
+          cd workspaces/${{ github.event.inputs.projectId }}/ios/App
+          xcodebuild -exportArchive \
+            -archivePath $PWD/build/App.xcarchive \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath $PWD/build
+      
+      - name: Upload to TestFlight
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
+        run: |
+          xcrun altool --upload-app \
+            --type ios \
+            --file workspaces/${{ github.event.inputs.projectId }}/ios/App/build/App.ipa \
+            --username "$APPLE_ID" \
+            --password "$APP_SPECIFIC_PASSWORD"
+
+  build-android:
+    if: ${{ github.event.inputs.platform == 'android' || github.event.inputs.platform == 'both' }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      
+      - name: Install dependencies
+        run: |
+          cd workspaces/${{ github.event.inputs.projectId }}
+          npm install
+      
+      - name: Build web assets
+        run: |
+          cd workspaces/${{ github.event.inputs.projectId }}
+          npm run build
+      
+      - name: Sync Capacitor
+        run: |
+          cd workspaces/${{ github.event.inputs.projectId }}
+          npx cap sync android
+      
+      - name: Build Android APK
+        run: |
+          cd workspaces/${{ github.event.inputs.projectId }}/android
+          ./gradlew assembleRelease
+      
+      - name: Sign APK
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: workspaces/${{ github.event.inputs.projectId }}/android/app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+          alias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      
+      - name: Upload to Play Console
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          packageName: com.dace.app.${{ github.event.inputs.projectId }}
+          releaseFiles: workspaces/${{ github.event.inputs.projectId }}/android/app/build/outputs/apk/release/app-release-signed.apk
+          track: internal
+*/

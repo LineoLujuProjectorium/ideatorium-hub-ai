@@ -1,9 +1,19 @@
-import type { CapacitorConfig } from "@capacitor/cli";
+import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: "space.ideatorium.app",
-  appName: "Ideatorium",
-  webDir: "out"
+  appId: 'com.dace.app',
+  appName: 'DACE App',
+  webDir: 'out',
+  server: {
+    androidScheme: 'https'
+  },
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 2000,
+      backgroundColor: '#000000',
+      showSpinner: false
+    }
+  }
 };
 
 export default config;
