@@ -1,59 +1,71 @@
+// /app/layout.tsx
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+import { Navigation } from "@/components/navigation/Navigation";
+import { DACEProvider } from "@/components/providers/DACEProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { QueryProvider } from "@/components/providers/QueryProvider";
 
-export const metadata = {
-  title: "Ideatorium",
-  description: "Think. Build. Ship.",
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Ideatorium Hub | Deterministic App Creation Engine",
+  description: "Turn ideas into production apps in minutes. No code. No hallucinations. Just results.",
+  keywords: ["DACE", "app builder", "no code", "deterministic", "interpretation", "litigation", "legal tech", "AI"],
+  authors: [{ name: "Ideatorium Hub" }],
+  openGraph: {
+    type: "website",
+    title: "Ideatorium Hub DACE Engine",
+    description: "Deterministic App Creation Engine for Legal Tech & Beyond",
+    siteName: "Ideatorium Hub",
+  },
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en">
-      <body className="bg-black text-white">
-        <div className="min-h-screen grid grid-cols-[240px_1fr_320px]">
-          
-          {/* Left Nav */}
-          <aside className="border-r border-white/10 p-6">
-            <h1 className="text-xl font-bold mb-8">Ideatorium</h1>
-            <nav className="space-y-3 text-sm">
-              <Link href="/" className="block hover:underline">Dashboard</Link>
-              <Link href="/projects" className="block hover:underline">Projects</Link>
-              <Link href="/search" className="block hover:underline">Search</Link>
-              <Link href="/templates" className="block hover:underline">Templates</Link>
-              <Link href="/inbox" className="block hover:underline">Inbox</Link>
-            </nav>
-          </aside>
-
-          {/* Main */}
-          <main className="p-10 overflow-y-auto">
-            {children}
-          </main>
-
-          {/* Right Panel */}
-          <aside className="border-l border-white/10 p-6 space-y-6">
-            <div>
-              <h2 className="font-semibold mb-2">AI Chat</h2>
-              <p className="text-xs opacity-70 mb-2">Chat engine online.</p>
-              <textarea
-                className="w-full bg-black border border-white/20 p-2 text-sm"
-                placeholder="Ask Ideatorium to build, modify, or explain…"
-              />
-              <button className="mt-2 border px-3 py-1 text-sm">
-                Send
-              </button>
-            </div>
-
-            <div>
-              <h2 className="font-semibold mb-2">Blockers</h2>
-              <p className="text-sm opacity-70">No blockers</p>
-            </div>
-          </aside>
-
-        </div>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body className={`${inter.className} antialiased bg-gray-50 dark:bg-gray-900 transition-colors duration-300`}>
+        <ThemeProvider>
+          <QueryProvider>
+            <DACEProvider>
+              <Navigation />
+              <main className="min-h-screen pt-16">
+                {children}
+              </main>
+              <footer className="border-t border-gray-200 dark:border-gray-800 py-6 text-center text-gray-500 dark:text-gray-400 text-sm bg-white dark:bg-gray-900">
+                <div className="container mx-auto px-4">
+                  <p>© {new Date().getFullYear()} Ideatorium Hub DACE Engine v1.0</p>
+                  <p className="mt-1">
+                    Deterministic App Creation Engine | 100% Template-based | No AI Hallucinations
+                  </p>
+                  <div className="flex justify-center gap-4 mt-4">
+                    <a href="/privacy" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                      Privacy
+                    </a>
+                    <a href="/terms" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                      Terms
+                    </a>
+                    <a href="/docs" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                      Documentation
+                    </a>
+                    <a href="/contact" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                      Contact
+                    </a>
+                  </div>
+                </div>
+              </footer>
+            </DACEProvider>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

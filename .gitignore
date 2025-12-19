@@ -1,16 +1,146 @@
-# Vercel
-.vercel
+# .gitignore - DACE Engine Enhanced
 
-# Next.js build output
-.next/
-out/
+# ==================== DEPENDENCIES ====================
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+.pnpm-store/
 
-# Dependencies
-node_modules/
+# ==================== PACKAGE MANAGER LOCK FILES ====================
+# Only include ONE of these based on what you use
+package-lock.json    # If you use npm
+yarn.lock            # If you use yarn
+pnpm-lock.yaml       # If you use pnpm
 
-# OS junk
+# ==================== NEXT.JS & BUILD ====================
+/.next
+/out
+/build
+/.serverless
+/.next/cache/
+
+# ==================== ENVIRONMENT VARIABLES ====================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# ==================== DEBUG & LOGS ====================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+*.log
+logs/
+
+# ==================== OPERATING SYSTEM ====================
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
-# Env files
-.env*
-node_modules/
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ==================== IDE & EDITORS ====================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-*
+.project
+.settings/
+*.tmproj
+*.sublime-workspace
+
+# ==================== DACE ENGINE SPECIFIC ====================
+# Generated apps by DACE
+/generated-apps/
+/apps/*/node_modules
+/apps/*/.next
+/apps/*/out
+/apps/*/build
+
+# Mobile builds
+/android
+/ios
+/www
+/platforms/
+/plugins/
+
+# Capacitor
+capacitor.config.json
+capacitor.config.ts
+
+# ==================== DATABASE ====================
+*.db
+*.sqlite
+*.sqlite3
+/prisma/*.db
+/prisma/migrations/*/migration_lock.toml
+/prisma/migrations/dev.db
+
+# ==================== TESTING ====================
+/coverage
+.nyc_output
+*.lcov
+
+# ==================== DEPLOYMENT ====================
+/.vercel
+/.netlify
+.cache/
+.next/cache/
+
+# ==================== TEMPORARY FILES ====================
+*.tmp
+*.temp
+.tmp/
+.temp/
+.cache/
+
+# ==================== UPLOADED FILES ====================
+/uploads/
+/public/uploads/
+
+# ==================== SECURITY ====================
+*.pem
+*.key
+*.crt
+*.csr
+
+# ==================== MISC ====================
+.history/
+*.orig
+*.bak
+dump.rdb
+*.pid
+*.seed
+*.pid.lock
+*.tgz
+
+# ==================== CI/CD ====================
+.circleci/config.yml.local
+.github/workflows/*.yml.local

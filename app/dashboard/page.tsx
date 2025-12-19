@@ -1,25 +1,29 @@
-// app/dashboard/page.tsx
-"use client";
-import useSWR from "swr";
-
-async function fetchProjects() {
-  const res = await fetch("/api/projects");
-  return res.json();
-}
-
+// /app/dashboard/page.tsx
 export default function Dashboard() {
-  const { data, mutate } = useSWR("/api/projects", fetchProjects, { refreshInterval: 2000 });
-
+  const projects = await getProjectsWithDeployments();
+  
   return (
-    <main className="p-6">
-      <h1 className="text-2xl font-bold">Your Apps</h1>
-      <ul>
-        {data?.projects?.map((p: any) => (
-          <li key={p.id}>
-            <a href={p.vercelUrl || "#"}>{p.name}</a> ({p.status})
-          </li>
-        ))}
-      </ul>
-    </main>
+    <div>
+      <h1>Your Active Applications</h1>
+      
+      {projects.map(project => (
+        <div key={project.id}>
+          <h3>{project.name}</h3>
+          <AppStatusBadge status={project.deployment.status} />
+          <div>
+            {project.deployment.webUrl && (
+              <a href={project.deployment.webUrl}>🌐 Live Web App</a>
+            )}
+            {project.deployment.iosUrl && (
+              <a href={project.deployment.iosUrl}>📱 TestFlight</a>
+            )}
+            {project.deployment.androidUrl && (
+              <a href={project.deployment.androidUrl}>🤖 Play Store</a>
+            )}
+          </div>
+          <DeploymentLogs logs={project.deployment.logs} />
+        </div>
+      ))}
+    </div>
   );
 }
